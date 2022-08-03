@@ -31,7 +31,7 @@
 # # print(change_data_student())
 
 import postgre as p
-import interface as inf
+import interface_easygui as inf
 import output as op
 import datetime
 

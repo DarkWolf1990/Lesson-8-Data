@@ -28,7 +28,7 @@
 #     # return list_data_student
 
 import postgre as p
-import interface as inf
+import interface_easygui as inf
 
 def delete_data_student(connection):
     id = inf.menu_delete_student()

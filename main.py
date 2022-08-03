@@ -6,7 +6,7 @@ import easygui
 from easygui import *
 import input as ip
 import output as op
-import interface as inf
+import interface_easygui as inf
 import change as ch
 import delete as d
 import postgre as p
