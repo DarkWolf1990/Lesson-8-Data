@@ -1,3 +1,1 @@
-student_id;surname;name;date_of_birth
-1;Иванов;Иван;01.01.2014
-2;Петров;Петр;02.02.2014
+student_id;surname;name;date_of_birth;class_id1;Иванов;Иван;2014-01-01;12;Петров;Петр;2014-03-03;23;Петров;Василий;2014-04-04;1

@@ -33,21 +33,53 @@
 
 import csv
 import output as op
+import postgre as p
+
+# def input_data_student(student_data):
+#     student_id = max(op.output_data_student().keys()) + 1
+#     surname, name, date_of_birth = student_data
+#     with open('student_base.csv', 'a', encoding='cp1251') as sb:
+#         file_writer = csv.writer(sb, delimiter=";")
+#         # file_writer.writerow(['student_id', 'surname', 'name', 'date_of_birth'])
+#         file_writer.writerow([str(student_id), surname, name, date_of_birth])
+
+# def input_data_class(class_data):
+#     class_id = max(op.output_data_class().keys()) + 1
+#     number, letter = class_data
+#     with open('class_base.csv', 'a', encoding='cp1251') as cb:
+#         file_writer = csv.writer(cb, delimiter=";")
+#         # file_writer.writerow(['class_id', 'number', 'letter'])
+#         file_writer.writerow([str(class_id), number, letter])
 
 def input_data_student(student_data):
-    student_id = max(op.output_data_student().keys()) + 1
-    surname, name, date_of_birth = student_data
-    with open('student_base.csv', 'a', encoding='cp1251') as sb:
-        file_writer = csv.writer(sb, delimiter=";")
-        # file_writer.writerow(['student_id', 'surname', 'name', 'date_of_birth'])
-        file_writer.writerow([str(student_id), surname, name, date_of_birth])
+    student_records = tuple(student_data)
+    insert_query = (f"INSERT INTO students (surname, name, date_of_birth, class_id) VALUES {student_records}")
+    p.connection.autocommit = True
+    cursor = p.connection.cursor()
+    cursor.execute(insert_query)
 
 def input_data_class(class_data):
-    class_id = max(op.output_data_class().keys()) + 1
-    number, letter = class_data
-    with open('class_base.csv', 'a', encoding='cp1251') as cb:
-        file_writer = csv.writer(cb, delimiter=";")
-        # file_writer.writerow(['class_id', 'number', 'letter'])
-        file_writer.writerow([str(class_id), number, letter])
+    class_records = tuple(class_data)
+    insert_query = (f"INSERT INTO classes (number, letter) VALUES {class_records}")
+    p.connection.autocommit = True
+    cursor = p.connection.cursor()
+    cursor.execute(insert_query)
 
-            
+def export_csv_data_student():
+    students = op.read_query_students()
+    with open('student_base.csv', 'w', encoding='cp1251') as sb:
+        file_writer = csv.writer(sb, delimiter=";", lineterminator="\r")
+        file_writer.writerow(['student_id', 'surname', 'name', 'date_of_birth', 'class_id'])
+        for student in students:
+            student_id, surname, name, date_of_birth, class_id = student
+            file_writer.writerow([str(student_id), surname, name, date_of_birth, class_id])
+
+def export_csv_data_class():
+    classes = op.read_query_classes()
+    with open('class_base.csv', 'w', encoding='cp1251') as cb:
+        file_writer = csv.writer(cb, delimiter=";", lineterminator="\r")
+        file_writer.writerow(['class_id', 'number', 'letter'])
+        for one_class in classes:
+            class_id, number, letter = one_class
+            file_writer.writerow([str(class_id), number, letter])
+
