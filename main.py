@@ -6,9 +6,10 @@ import easygui
 from easygui import *
 import input as ip
 import output as op
-import interface as inf
+import interface_easygui as inf
 import change as ch
-import delete
+import delete as d
+import postgre as p
 
 def main_menu():
     output = inf.menu()
@@ -31,9 +32,8 @@ def main_menu():
                             msgbox('Не удалось добавить данные', 'Ошибка')
                             continue
                     case 'Удалить ученика':
-                        student_data = inf.menu_delete_student()
                         try:
-                            delete.delete_data_student(student_data)
+                            d.delete_data_student(p.connection)
                         except TypeError:
                             msgbox('Не удалось удалить данные', 'Ошибка')
                             continue
@@ -45,7 +45,11 @@ def main_menu():
                             msgbox('Не удалось изменить данные', 'Ошибка')
                             continue
                     case 'Просмотреть все данные об учениках':
-                        op.print_output_data_student(op.output_data_student())
+                        students = op.read_query_students()
+                        text = op.output_query_students(students)
+                        msgbox(text, 'Данные об учениках')
+                    case 'Экспорт в CSV':
+                        ip.export_csv_data_student()
             case 'Классы':
                 output_class = inf.menu_class()
                 match output_class:
@@ -58,13 +62,27 @@ def main_menu():
                         try:
                             ip.input_data_class(class_data)
                         except TypeError:
+                            msgbox('Не удалось добавить данные', 'Ошибка')
                             continue
                     case 'Удалить класс':
-                        inf.menu_delete_class()
+                        try:
+                            d.delete_data_class(p.connection)
+                        except TypeError:
+                            msgbox('Не удалось удалить данные', 'Ошибка')
+                            continue
                     case 'Изменить данные о классе':
-                        inf.menu_change_class()
+                        new_class_data = inf.menu_change_class()
+                        try:
+                            ch.change_data_class(new_class_data)
+                        except TypeError:
+                            msgbox('Не удалось изменить данные', 'Ошибка')
+                            continue
                     case 'Просмотреть данные обо всех классах':
-                        op.print_output_data_class(op.output_data_class())
+                        classes = op.read_query_classes()
+                        text = op.output_query_classes(classes)
+                        msgbox(text, 'Данные обо всех классах')
+                    case 'Экспорт в CSV':
+                        ip.export_csv_data_class()
 
 
 main_menu()
