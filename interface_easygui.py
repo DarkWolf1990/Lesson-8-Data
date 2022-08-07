@@ -45,6 +45,7 @@ def menu_students():
     button4 = 'Изменить данные об ученике'
     button5 = 'Просмотреть все данные об учениках'
     button6 = 'Экспорт в CSV'
+    button7 = 'Поиск ученика'
     button_list.append(button0)
     button_list.append(button1)
     button_list.append(button2)
@@ -52,6 +53,7 @@ def menu_students():
     button_list.append(button4)
     button_list.append(button5)
     button_list.append(button6)
+    button_list.append(button7)
     output_students = buttonbox(text, title, button_list)
     return output_students
 
@@ -66,6 +68,7 @@ def menu_class():
     button4 = 'Изменить данные о классе'
     button5 = 'Просмотреть данные обо всех классах'
     button6 = 'Экспорт в CSV'
+    button7 = 'Импорт из CSV'
     button_list.append(button0)
     button_list.append(button1)
     button_list.append(button2)
@@ -73,6 +76,7 @@ def menu_class():
     button_list.append(button4)
     button_list.append(button5)
     button_list.append(button6)
+    button_list.append(button7)
     output_students = buttonbox(text, title, button_list)
     return output_students
 
@@ -119,6 +123,12 @@ def menu_change_student():
     student_data.append(reply)
     student_data.insert(0, student_id)
     return student_data
+
+def menu_find_student():
+    title = 'Поиск ученика'
+    msg = 'Введите фамилию ученика'
+    surname = enterbox(msg, title)
+    return surname
 
 def menu_delete_student():
     title = 'Удаление данных об ученике'

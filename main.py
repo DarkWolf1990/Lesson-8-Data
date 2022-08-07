@@ -10,6 +10,8 @@ import interface_easygui as inf
 import change as ch
 import delete as d
 import postgre as p
+import export as ex
+import find as f
 
 def main_menu():
     output = inf.menu()
@@ -49,7 +51,12 @@ def main_menu():
                         text = op.output_query_students(students)
                         msgbox(text, 'Данные об учениках')
                     case 'Экспорт в CSV':
-                        ip.export_csv_data_student()
+                        ex.export_csv_data_student()
+                    case 'Поиск ученика':
+                        surname = inf.menu_find_student()
+                        students = f.find_student(surname)
+                        text = f.output_find_student(students)
+                        msgbox(text, 'Найдены ученики')
             case 'Классы':
                 output_class = inf.menu_class()
                 match output_class:
@@ -82,7 +89,7 @@ def main_menu():
                         text = op.output_query_classes(classes)
                         msgbox(text, 'Данные обо всех классах')
                     case 'Экспорт в CSV':
-                        ip.export_csv_data_class()
+                        ex.export_csv_data_class()
 
 
 main_menu()
