@@ -1,4 +1,3 @@
-import psycopg2
 # from psycopg2 import Error
 # from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 # try:
@@ -21,6 +20,7 @@ import psycopg2
 #         connection.close()
 #         print("Соединение с PostgreSQL закрыто")
 
+import psycopg2
 from psycopg2 import OperationalError
 
 def create_connection(db_name, db_user, db_password, db_host, db_port):
@@ -37,6 +37,7 @@ def create_connection(db_name, db_user, db_password, db_host, db_port):
     except OperationalError as e:
         print(f"The error '{e}' occurred")
     return connection
+
 
 def create_database(connection, query):
     connection.autocommit = True
@@ -61,6 +62,7 @@ def execute_query(connection, query):
     #         cursor.close()
     #         connection.close()
     #         print("Соединение с PostgreSQL закрыто")
+
 
 # connection = create_connection(
 #     "postgres", "postgres", "1111", "127.0.0.1", "5432"
